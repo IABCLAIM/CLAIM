@@ -11,7 +11,7 @@ To prevent domain fraud IAB Labs have pioneered the ads.txt solution. For the la
 CLAIM is currently deployed to the Ethereum network and the contract is written in solidity. You can review the code [here](contracts/claim.sol).
 
 ## Try it yourself
-IAB Denmark is currently hosting a web UI for you to generate your own blockchain-powered ads.txt. Visit [http://claim.iabdanmark.dk](http://claim.iabdanmark.dk) to test it. Also check out the [server](server) folder to see how we configured the server.
+IAB Denmark is currently hosting a web UI for you to generate your own blockchain-powered ads.txt. Visit [http://claim.iabdanmark.dk](http://claim.iabdanmark.dk) to test it. Also check out [this](claim.iabdenmark.dk) folder to see how we configured the server.
 
 ## Contributions
 The CLAIM initiative is open source and contributions are encouraged. If you have any suggestions feel free to create a pull request.
