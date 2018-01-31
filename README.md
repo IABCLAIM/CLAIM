@@ -3,7 +3,9 @@
 ## Introduction
 To prevent domain fraud IAB Labs have pioneered the ads.txt solution. For the last few years a new technology has sprung to mind when talking about ways to prevent fraud and establish trust. That technology is called blockchain and CLAIM is our attempt to port ads.txt to a blockchain environment.
 
-[Here](https://drive.google.com/file/d/1CxynECoKaoSrUYy0kVGztYrK6SyLNJBu/view?usp=sharing) is a video describing how CLAIM works on a conceptual level.
+[Here](https://drive.google.com/file/d/1CxynECoKaoSrUYy0kVGztYrK6SyLNJBu/view?usp=sharing) is a video describing how CLAIM works on a conceptual level:
+
+[![Video introduction to CLAIM](screenshot.png)](https://drive.google.com/file/d/1CxynECoKaoSrUYy0kVGztYrK6SyLNJBu/view?usp=sharing)
 
 ## Deployment
 CLAIM is currently deployed to the Ethereum network and the contract is written in solidity. You can review the code [here](contracts/claim.sol).
