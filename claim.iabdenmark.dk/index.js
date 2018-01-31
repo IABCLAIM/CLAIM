@@ -1,6 +1,6 @@
 Web3 = require('web3')
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-code = fs.readFileSync('contracts/claim.sol').toString()
+code = fs.readFileSync('claim-demo.sol').toString()
 solc = require('solc')
 compiledCode = solc.compile(code)
 

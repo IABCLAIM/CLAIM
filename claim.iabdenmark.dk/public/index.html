@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>CLAIM - Blockchain for Programmatic Advertising.</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-  <!-- Bulma Version 0.6.0 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" integrity="sha256-HEtF7HLJZSC3Le1HcsWbz1hDYFPZCqDhZa9QsCgVUdw=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
   <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="script.js"></script>
+
 </head>
 <body>
   <section class="hero is-success is-fullheight">
@@ -22,27 +31,29 @@
             <figure class="avatar">
               <img height="128" width="128" src="https://acclaim-production-app.s3.amazonaws.com/images/0118ee08-d289-4fd5-9bef-be9b767462f6/Org_IAB.PNG">
             </figure>
-            <form>
+            <form name="publisher" onsubmit="return submitToClaim();">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large" type="email" placeholder="Your domain" autofocus="">
+                  <input class="input is-large" type="text" name="domain" placeholder="Your domain" autofocus="">
                 </div>
               </div>
 
               <div class="field">
                   <div class="control">
-                    <textarea class="textarea" type="text" placeholder="Yours ads.txt file goes here"></textarea>
-                </div>
-            </div>
+                    <textarea class="textarea" type="text" name="adstxt" placeholder="Yours ads.txt file goes here"></textarea>
+                  </div>
+              </div>
 
+              <div class="field g-recaptcha" data-sitekey="6LeZjEMUAAAAAMWS5SthmL2q9_OanTe-rTYnz-Ru" data-callback="allowSubmit"></div>
 
-              <a class="button is-block is-info is-large">Send to CLAIM</a>
+              <button id="submit" type="submit" class="button is-block is-info is-large" disabled>Send to CLAIM</button>
+
               <a class="button is-text is-normal">I represent a SSP</a>
             </form>
           </div>
           <p class="has-text-grey">
              &nbsp;·&nbsp;<a href="http://iabdanmark.dk/">IAB Denmark</a> &nbsp;·&nbsp;
-            <a href="https://github.com/knobel-dk/IAB-CLAIM">Learn more</a> &nbsp;·&nbsp;
+            <a href="https://github.com/IABCLAIM/CLAIM">Learn more</a> &nbsp;·&nbsp;
           </p>
         </div>
       </div>
