@@ -16,7 +16,11 @@
     "dependencies": {
         "web3": "0.20.2",
         "solc": "0.4.19",
-        "ganache-cli": "6.0.3"
+        "ganache-cli": "6.0.3",
+        "bulma": "0.6.2",
+        "toastr": "2.1.4",
+        "jquery": "latest",
+        "font-awesome": "latest"
     },
     "devDependencies": {
       "gulp": "latest",
