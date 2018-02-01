@@ -24,6 +24,9 @@
     },
     "devDependencies": {
       "gulp": "latest",
+      "gulp-concat": "latest",
+      "gulp-concat": "latest",
+      "gulp-minify-css": "latest",
       "gulp-util": "latest",
       "gulp-sass": "latest",
       "gulp-coffee": "latest",
