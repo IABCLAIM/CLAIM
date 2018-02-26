@@ -1,37 +1,29 @@
 {
-    "name": "CLAIM-demo",
-    "description": "Libraries to host your own CLAIM demo",
-    "version": "0.0.1",
-    "homepage": "http://claim.iabdenmark.dk",
-    "bugs": {
-        "url": "https://github.com/IABCLAIM/CLAIM/issues"
-    },
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "license": "MIT",
-    "keywords": [],
-    "author": "Jacob Knobel",
-    "dependencies": {
-        "web3": "0.20.2",
-        "solc": "0.4.19",
-        "ganache-cli": "6.0.3",
-        "bulma": "0.6.2",
-        "toastr": "2.1.4",
-        "jquery": "latest",
-        "font-awesome": "latest"
-    },
-    "devDependencies": {
-      "gulp": "latest",
-      "gulp-concat": "latest",
-      "gulp-concat": "latest",
-      "gulp-minify-css": "latest",
-      "gulp-util": "latest",
-      "gulp-sass": "latest",
-      "gulp-coffee": "latest",
-      "gulp-uglify": "latest",
-      "gulp-concat": "latest",
-      "gulp-connect": "latest"
+  "name": "CLAIM-demo",
+  "description": "Libraries to host your own CLAIM demo",
+  "version": "0.0.1",
+  "homepage": "http://claim.iabdenmark.dk",
+  "bugs": {
+    "url": "https://github.com/IABCLAIM/CLAIM/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "author": "Jacob Knobel",
+  "dependencies": {
+    "solc": "latest",
+    "ganache-cli": "latest"
+  },
+  "devDependencies": {
+    "font-awesome": "latest",
+    "bulma": "0.6.2",
+    "jquery": "latest",
+    "toastr": "latest",
+    "web3": "latest",
+    "gulp": "latest",
+    "gulp-concat": "latest"
   }
 }

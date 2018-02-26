@@ -1,4 +1,4 @@
-toastr.options = {
+const toastrOptions = {
     "closeButton": false,
     "debug": false,
     "newestOnTop": false,
@@ -14,23 +14,23 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
-  }
+};
 
-var allowSubmit = function () {
+function allowSubmit() {
 
-  validated = true;
+  window.validated = true;
 
   if(document.forms["publisher"]["domain"].value == "") {
-    toastr["error"]("Please specify a domain", "Error");
-    validated = false;
+    window.toastr["error"]("Please specify a domain", "Error");
+    window.validated = false;
   }
 
   if(document.forms["publisher"]["adstxt"].value == "") {
-    toastr["error"]("Please paste in your ads.txt file", "Error");
-    validated = false;
+    window.toastr["error"]("Please paste in your ads.txt file", "Error");
+    window.validated = false;
   }
 
-  if(!validated) {
+  if(!window.validated) {
     grecaptcha.reset();
     document.getElementById("submit").disabled = true;
   } else {
@@ -41,19 +41,4 @@ var allowSubmit = function () {
 
 }
 
-var submitToClaim = function() {
-
-  response = grecaptcha.getResponse();
-
-  if(response.length !== "") {
-
-    $.post("http://claim.iabdanmark.dk/:8545", {
-      'publisher': document.forms["publisher"]["domain"].value,
-      'adstxt': document.forms["publisher"]["adstxt"].value,
-    }, function(result) {
-      toastr["success"]("Your contract has been submitted to Ethereum", "Sucess");    
-    });
-  }
-    
-  return false;
-}
+export { toastrOptions, allowSubmit, submitToClaim};
