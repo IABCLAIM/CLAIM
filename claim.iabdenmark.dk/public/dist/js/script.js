@@ -30264,16 +30264,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.toastr = __WEBPACK_IMPORTED_MODULE_0_toastr___default.a;
 
 
-window.jquery = __WEBPACK_IMPORTED_MODULE_1_jquery___default.a;
+window.$ = __WEBPACK_IMPORTED_MODULE_1_jquery___default.a;
 
 
 window.web3 = __WEBPACK_IMPORTED_MODULE_2_web3___default.a;
 
 
-
 window.toastr.options = __WEBPACK_IMPORTED_MODULE_3__submit_js__["b" /* toastrOptions */];
-window.allowSubmit = __WEBPACK_IMPORTED_MODULE_3__submit_js__["a" /* allowSubmit */];
-//window.submitToClaim = submitToClaim;
+window.ethSubmit = __WEBPACK_IMPORTED_MODULE_3__submit_js__["a" /* ethSubmit */];
+
 
 /***/ }),
 /* 167 */
@@ -77065,49 +77064,102 @@ module.exports = function (_ref) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return toastrOptions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return allowSubmit; });
-/* unused harmony export submitToClaim */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ethSubmit; });
 const toastrOptions = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-center",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
 };
 
-function allowSubmit() {
+function ethSubmit() {
 
-  window.validated = true;
-
-  if(document.forms["publisher"]["domain"].value == "") {
-    window.toastr["error"]("Please specify a domain", "Error");
-    window.validated = false;
-  }
-
-  if(document.forms["publisher"]["adstxt"].value == "") {
+  if (!$("#adstxt").val()) {
     window.toastr["error"]("Please paste in your ads.txt file", "Error");
-    window.validated = false;
+    return false;
   }
+  else {
+    window.toastr["info"]("Establishing connection to Ethereum", "Connecting..");
 
-  if(!window.validated) {
-    grecaptcha.reset();
-    document.getElementById("submit").disabled = true;
-  } else {
-    document.getElementById("submit").disabled = false;
+    var contract = new web3.eth.Contract([
+    {
+      "constant": false,
+      "inputs": [
+      {
+        "name": "ssp",
+        "type": "address"
+      }
+      ],
+      "name": "publisher_add_supply_side_partner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+      {
+        "name": "ssp",
+        "type": "address"
+      }
+      ],
+      "name": "publisher_delete_supply_side_partner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+      {
+        "name": "publisher",
+        "type": "address"
+      }
+      ],
+      "name": "ssp_approve_publisher",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+      {
+        "name": "publisher",
+        "type": "address"
+      }
+      ],
+      "name": "ssp_delete_publisher",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+    ], "0xf12b5dd4ead5f743c6baa640b0216200e89b60da");
+
+    setTimeout(function() {
+      window.toastr.clear();
+      setTimeout(function() {
+        window.toastr['success']("Your updated Ads.txt has been sent to CLAIM on Ethereum", "Success");
+      }, 500);
+    }, 1200);
+    
+    return false;
   }
-
-  return false;
-
 }
 
 
