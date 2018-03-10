@@ -30259,7 +30259,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_web3__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_web3___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_web3__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__submit_js__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__publisher_submit_js__ = __webpack_require__(364);
 
 window.toastr = __WEBPACK_IMPORTED_MODULE_0_toastr___default.a;
 
@@ -30269,9 +30269,99 @@ window.$ = __WEBPACK_IMPORTED_MODULE_1_jquery___default.a;
 
 window.web3 = __WEBPACK_IMPORTED_MODULE_2_web3___default.a;
 
+const accounts = {
+  "Ekstra Bladet": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+  "Berlingske": "0xf17f52151ebef6c7334fad080c5704d77216b732",
+  "Politiken": "0xc5fdf4076b8f3a5357c5e395ab970b5b54098fef",
+  "Alt.dk": "0x821aea9a577a9b44299b9c15c88cf3087f3b5544",
+  "google.com": "0x0d1d4e623d10f9fba5db95830f7d3839406c6af2",
+  "pubmatic.com": "0x2932b7a2355d6fecc4b5c0b6bd44cc31df247a2e",
+  "appnexus.com": "0x2191ef87e392377ec08e7c08eb105ef5448eced5",
+  "fyber.com": "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
+  "freewheel.tv": "0x6330a553fc93768f612722bb8c2ec78ac90b3bbc",
+  "adform.com": "0x5aeda56215b167893e80b4fe645ba6d5bab767de"
+};
 
-window.toastr.options = __WEBPACK_IMPORTED_MODULE_3__submit_js__["b" /* toastrOptions */];
-window.ethSubmit = __WEBPACK_IMPORTED_MODULE_3__submit_js__["a" /* ethSubmit */];
+const claimContract = [{
+        "constant": false,
+        "inputs": [{
+            "name": "ssp",
+            "type": "address"
+        }],
+        "name": "publisher_add_supply_side_partner",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+            "name": "ssp",
+            "type": "address"
+        }],
+        "name": "publisher_delete_supply_side_partner",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+            "name": "publisher",
+            "type": "address"
+        }],
+        "name": "ssp_approve_publisher",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+            "name": "publisher",
+            "type": "address"
+        }],
+        "name": "ssp_delete_publisher",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
+
+const toastrOptions = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
+
+
+window.toastr.options = toastrOptions;
+window.claimContract = claimContract;
+window.accounts = accounts;
+window.ethSubmit = __WEBPACK_IMPORTED_MODULE_3__publisher_submit_js__["a" /* ethSubmit */];
+
+document.addEventListener("DOMContentLoaded",function(){
+    __WEBPACK_IMPORTED_MODULE_1_jquery___default()("#submit").submit(function(e){
+        e.preventDefault();
+        Object(__WEBPACK_IMPORTED_MODULE_3__publisher_submit_js__["a" /* ethSubmit */])();
+    });
+});
 
 
 /***/ }),
@@ -77063,26 +77153,7 @@ module.exports = function (_ref) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return toastrOptions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ethSubmit; });
-const toastrOptions = {
-  "closeButton": false,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": false,
-  "positionClass": "toast-top-center",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-};
-
 function ethSubmit() {
 
   if (!$("#adstxt").val()) {
@@ -77090,66 +77161,31 @@ function ethSubmit() {
     return false;
   }
   else {
+
     window.toastr["info"]("Establishing connection to Ethereum", "Connecting..");
 
-    var contract = new web3.eth.Contract([
+    var adstxt = $("#adstxt").val();
+    var sender = $("#publisher-sender").val();
+    
+    var contract = new web3.eth.Contract(claimContract,
+      "0xf12b5dd4ead5f743c6baa640b0216200e89b60da");
+
+    var ssps = adstxt.split("\n");
+    var messages = {};
+    for(var i = 0; i < ssps.length; i++)
     {
-      "constant": false,
-      "inputs": [
-      {
-        "name": "ssp",
-        "type": "address"
-      }
-      ],
-      "name": "publisher_add_supply_side_partner",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-      {
-        "name": "ssp",
-        "type": "address"
-      }
-      ],
-      "name": "publisher_delete_supply_side_partner",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-      {
-        "name": "publisher",
-        "type": "address"
-      }
-      ],
-      "name": "ssp_approve_publisher",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-      {
-        "name": "publisher",
-        "type": "address"
-      }
-      ],
-      "name": "ssp_delete_publisher",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
+      var ssp = ssps[i].split(", ");
+      var sspDomain = ssp[0];
+      var sspAddress = accounts[sspDomain];
+      messages[sspDomain] = sspAddress;
     }
-    ], "0xf12b5dd4ead5f743c6baa640b0216200e89b60da");
+    for (var message in messages) {
+      contract.methods.publisher_add_supply_side_partner(messages[message]).send({
+        from: sender
+      }).then(function(receipt) {
+        console.log(receipt);
+      });
+    }
 
     setTimeout(function() {
       window.toastr.clear();
